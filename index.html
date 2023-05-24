@@ -29,41 +29,54 @@
                     <div class="well">
                          <h3>Online Users</h3>
                          <ul class="list-group" id="'users"></ul>
+                         <form action="" id="messageForm">
+                              <div class="form-group">
+                                   <label for="">Room
+                                        <input class="form-control" name="" id="room" cols="30" rows="10"></input>
+                                   </label>
+                                   <br>
+                                   <label for="">Enter Message</label>
+                                   <textarea class="form-control" name="" id="message" cols="30" rows="10"></textarea>
+                                   <br>
+                              </div>
+                              <input type="submit" class="btn btn-primary" value="send message">
+                         </form>
                     </div>
                </div>
                <div class="col-md-8">
                     <div class="chat id" id="chat">
 
                     </div>
-                    <form action="" id="messageForm">
-                         <div class="form-group">
-                              <label for="">Enter Message</label>
-                              <textarea class="form-control" name="" id="message" cols="30" rows="10"></textarea>
-                              <br>
-                         </div>
-                         <input type="submit" class="btn btn-primary" value="send message">
-                    </form>
+
                </div>
           </div>
      </div>
-<script>
-     $(function(){
-          var socket = io.connect()
-          var $messageForm = $('#messageForm')
-          var $message = $('#message')
-          var $chat = $('#chat')
+     <script>
+          $(function () {
+               var socket = io.connect('http://localhost:3000')
+               var $messageForm = $('#messageForm')
+               var $message = $('#message')
+               var $room = $('#room')
+               var $chat = $('#chat')
 
-          $messageForm.submit(function(e){
-               e.preventDefault()
-               socket.emit('send message', $message.val())
-               $message.val('')
-               console.log('submitted')
+               $messageForm.submit(function (e) {
+                    e.preventDefault()
+                    socket.emit('send message', $message.val(), $room.val())
+                    $room.val('')
+                    $message.val('')
+                    console.log('submitted')
+               })
+               socket.on('connect', () => {
+                    $chat.append('<div class="well">' + "connected" + socket.id + '</div>')
+               })
+
+               socket.on('new message', function (data) {
+
+                    $chat.append('<div class="well">' + data.msg + '</div>')
+               })
+
           })
-          socket.on('new message', function(data){
-               $chat.append('<div class="well">'+ data.msg+ '</div>' )
-          })
-     })
-</script>
+     </script>
 </body>
 
 </html>
