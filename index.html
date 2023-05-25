@@ -15,23 +15,17 @@
           integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
      <script src="https://cdn.socket.io/3.0.3/socket.io.js"></script>
      <script src="/socket.io/socket.io.js"></script>
-     <!-- <style>
-     body{
-          margin-top: 30px;
-     }
-     </style> -->
 </head>
-
 <body>
      <div class="container">
           <div class="row">
                <div class="col-md-4">
                     <div class="well">
-                         <h3>Online Users</h3>
+                         <h3>Chat App</h3>
                          <ul class="list-group" id="'users"></ul>
                          <form action="" id="messageForm">
                               <div class="form-group">
-                                   <label for="">Room
+                                   <label for="">Enter Friend's Id (optional) / Send To Public
                                         <input class="form-control" name="" id="room" cols="30" rows="10"></input>
                                    </label>
                                    <br>
@@ -56,7 +50,7 @@
                var $message = $('#message')
                var $room = $('#room')
                var $chat = $('#chat')
-
+               
                $messageForm.submit(function (e) {
                     e.preventDefault()
                     socket.emit('send message', $message.val(), $room.val())
@@ -64,12 +58,12 @@
                     $message.val('')
                     console.log('submitted')
                })
+
                socket.on('connect', () => {
                     $chat.append('<div class="well">' + "connected" + socket.id + '</div>')
                })
 
                socket.on('new message', function (data) {
-
                     $chat.append('<div class="well">' + data.msg + '</div>')
                })
 
