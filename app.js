@@ -6,7 +6,6 @@ const io = require('socket.io')(server, {
           origin: [ "http://localhost:3000"]
      }
 })
-
 users = []
 connections = []
 server.listen(3000)

@@ -16,9 +16,10 @@
      <script src="https://cdn.socket.io/3.0.3/socket.io.js"></script>
      <script src="/socket.io/socket.io.js"></script>
 </head>
-<body>
-     <div class="container">
-          <div class="row">
+
+<body style=" background-image: url(https://picsum.photos/1500/800/?blur);">
+     <div class="container bg-primary-subtle rounded-2">
+          <div class="row mt-3">
                <div class="col-md-4">
                     <div class="well">
                          <h3>Chat App</h3>
@@ -26,19 +27,21 @@
                          <form action="" id="messageForm">
                               <div class="form-group">
                                    <label for="">Enter Friend's Id (optional) / Send To Public
-                                        <input class="form-control" name="" id="room" cols="30" rows="10"></input>
+                                        <input class="form-control bg-body-secondary" name="" id="room" cols="30"
+                                             rows="10"></input>
                                    </label>
                                    <br>
                                    <label for="">Enter Message</label>
-                                   <textarea class="form-control" name="" id="message" cols="30" rows="10"></textarea>
+                                   <textarea class="form-control bg-body-secondary" name="" id="message" cols="30"
+                                        rows="10"></textarea>
                                    <br>
                               </div>
-                              <input type="submit" class="btn btn-primary" value="send message">
+                              <input type="submit" class="btn btn-primary mb-2" value="send message">
                          </form>
                     </div>
                </div>
                <div class="col-md-8">
-                    <div class="chat id" id="chat">
+                    <div class="chat id border border-info bg-info bg-gradient bg-opacity-50 mt-3 " id="chat">
                     </div>
                </div>
           </div>
@@ -50,7 +53,7 @@
                var $message = $('#message')
                var $room = $('#room')
                var $chat = $('#chat')
-               
+
                $messageForm.submit(function (e) {
                     e.preventDefault()
                     socket.emit('send message', $message.val(), $room.val())
@@ -64,7 +67,7 @@
                })
 
                socket.on('new message', function (data) {
-                    $chat.append('<div class="well">' + data.msg + '</div>')
+                    $chat.append('<div class="well bg-warning bg-gradient">' + data.msg + '</div>')
                })
 
           })
